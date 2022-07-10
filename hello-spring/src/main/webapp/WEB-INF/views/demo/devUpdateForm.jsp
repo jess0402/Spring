@@ -23,19 +23,19 @@ div#demo-container{
 		<div class="form-group row">
 		  <label for="name" class="col-sm-2 col-form-label">이름</label>
 		  <div class="col-sm-10">
-		    <input type="text" class="form-control" id="name" name="name" value="" required>
+		    <input type="text" class="form-control" id="name" name="name" value="${dev.name}" required>
 		  </div>
 		</div>
 		<div class="form-group row">
 		  <label for="career" class="col-sm-2 col-form-label">개발경력</label>
 		  <div class="col-sm-10">
-		    <input type="number" class="form-control" id="career" name="career" value="" required>년
+		    <input type="number" class="form-control" id="career" name="career" value="${dev.career}" required>년
 		  </div>
 		</div>
 		<div class="form-group row">
 		  <label for="email" class="col-sm-2 col-form-label">이메일</label>
 		  <div class="col-sm-10">
-		    <input type="email" class="form-control" id="email" name="email" value="" required>
+		    <input type="email" class="form-control" id="email" name="email" value="${dev.email}" required>
 		  </div>
 		</div>
 	  	<!-- https://getbootstrap.com/docs/4.1/components/forms/#inline -->
@@ -44,12 +44,14 @@ div#demo-container{
 	    	<div class="col-sm-10">
 			    <div class="form-check form-check-inline">
 				  <input class="form-check-input" type="radio" name="gender"
-				  		 id="gender0" value="M">
+				  		 id="gender0" value="M" 
+				  		 ${dev.gender eq 'M' ? 'checked' : ''}>
 				  <label class="form-check-label" for="gender0">남</label>
 				</div>
 				<div class="form-check form-check-inline">
 				  <input class="form-check-input" type="radio" name="gender" 
-				  		 id="gender1" value="F">
+				  		 id="gender1" value="F"
+				  		 ${dev.gender eq 'M' ? '' : 'checked'}>
 				  <label class="form-check-label" for="gender1">여</label>
 				</div>
 			</div>
@@ -76,12 +78,21 @@ div#demo-container{
 			</div>
 		</div>
 		<!-- 중요 - 수정시 반드시 고유번호도 함께 넘겨주어야 함 -->
-	  	<input type="hidden" name="no" value="" />
+	  	<input type="hidden" name="no" value="${dev.no}" />
 	  	<button type="submit" class="list-group-item list-group-item-action">dev 수정</button>
 	</form>
 </div>
 
 <script>
+
+const langs ='<c:forEach items= "${dev.lang}" var="lang" varStatus="vs">${lang}${vs.last ? "" : ","}</c:forEach>';
+console.log(langs);
+
+const langArr = langs.split(",");
+$(langArr).each((i, lang) => {
+	$(`input:checkbox[name=lang][value=\${lang}]`).prop("checked", true);
+});
+
 
 function devValidate(){
 	

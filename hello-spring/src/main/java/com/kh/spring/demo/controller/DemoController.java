@@ -160,20 +160,40 @@ public class DemoController {
 	}
 	
 	@RequestMapping(path="/updateDev.do", method=RequestMethod.GET)
-	public String updateDev(Model model) {
+	public String updateDev(
+			@RequestParam int no,
+			Model model) {
 		// 사용자 입력한 no값을 Dev 한 건 조회 후 view 단 전달
+		Dev dev = demoService.selectOneDev(no);
+		// log.info("선택된 dev = {}", dev);
+		model.addAttribute("dev", dev);
+		return "demo/devUpdateForm";
+	}
+	
+	
+	@RequestMapping(path="/updateDev.do", method=RequestMethod.POST)
+	public String updateDev(Dev dev, RedirectAttributes redirectAttr) {
+		
+		// log.info("수정할 dev = {}" ,dev);
+		int result = demoService.updateDev(dev);
+		
+		// redirect후에 사용자가 확인할 수 있는 정보 저장
+		redirectAttr.addFlashAttribute("msg", "Dev 수정이 정상적으로 처리되었습니다.");
 		
 		return "demo/devUpdateForm";
 	}
 	
+	
+	
 	@RequestMapping(path="/deleteDev.do", method=RequestMethod.POST)
 	public String deleteDev(
-			@RequestParam int no,
-			Model model) {
+			@RequestParam int no, RedirectAttributes redirectAttr) {
 		
-		log.info("no = {}", no);
+		// log.info("삭제할 Dev no = {}", no);
 		int result = demoService.deleteDev(no);
 		
+		// redirect후에 사용자가 확인할 수 있는 정보 저장
+		redirectAttr.addFlashAttribute("msg", "Dev 삭제가 정상적으로 처리되었습니다.");
 		return "redirect:devList.do";
 	}
 }

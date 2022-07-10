@@ -33,4 +33,35 @@
 		delete from dev
 		where no = #{no}
 	</delete>
+	
+	<select id="selectOneDev" resultMap="devMap">
+		select
+			*
+		from
+			dev
+		where 
+			no = #{no}
+	</select>
+	
+	<update id="updateDev">
+		update
+			dev
+		<set>
+			<if test="name != null and name neq ''">
+				name = #{name},
+			</if>
+			<if test="career != null and !''.equals(career)">
+				career = #{career},
+			</if>
+			<if test="gender != null and gender.toString != ''">
+				gender = #{gender},
+			</if>
+			<if test="lang != null">
+				lang = #{lang}
+			</if>
+		</set>
+		where
+			no = #{no}
+	</update>
+	
 </mapper>
