@@ -1,8 +1,20 @@
+<%@page import="java.util.List"%>
+<%@page import="com.kh.spring.demo.model.dto.Dev"%>
+<%@page import="java.util.Arrays"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%
+	Dev dev = (Dev) request.getAttribute("dev"); // 모델에 담았지만 reqeust에서 꺼내오면 됨. 
+	String[] langs = dev.getLang();
+	List<String> langList = langs != null ? Arrays.asList() : null;
+	
+	// 위에서 처리한 걸 pageContext에 담아야 el에서 쓸 수 있음!!! 
+	pageContext.setAttribute("langList", langList);
+
+%>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="Dev 수정" name="title"/>
@@ -86,7 +98,6 @@ div#demo-container{
 <script>
 
 const langs ='<c:forEach items= "${dev.lang}" var="lang" varStatus="vs">${lang}${vs.last ? "" : ","}</c:forEach>';
-console.log(langs);
 
 const langArr = langs.split(",");
 $(langArr).each((i, lang) => {

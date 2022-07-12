@@ -19,11 +19,11 @@
 	
 	<!-- 사용자작성 css -->
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
-
+	
 	<script>
 	<c:if test="${not empty msg}">
-		alert('${msg}');	// 1회용임
-	</c:if>	
+		alert('${msg}');
+	</c:if>
 	</script>
 	
 </head>
@@ -57,9 +57,21 @@
                         </div>
 				    </li>
 			    </ul>
-			    <button class="btn btn-outline-success my-2 my-sm-0" type="button" >로그인</button>
-                &nbsp;
-                <button class="btn btn-outline-success my-2 my-sm-0" type="button">회원가입</button>
+			    <c:if test="${not empty loginMember}">
+			    	<span><a href="${pageContext.request.contextPath}/member/memberDetail.do">${loginMember.name}</a>님, 안녕하세요&nbsp;</span>
+			    	<button 
+				    	class="btn btn-outline-success my-2 my-sm-0" type="button" 
+				    	onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do';">로그아웃</button>
+			    </c:if>
+			    <c:if test="${empty loginMember}">
+				    <button 
+				    	class="btn btn-outline-success my-2 my-sm-0" type="button" 
+				    	onclick="location.href='${pageContext.request.contextPath}/member/memberLogin.do';">로그인</button>
+	                &nbsp;
+	                <button 
+	                	class="btn btn-outline-success my-2 my-sm-0" type="button"
+	                	onclick="location.href='${pageContext.request.contextPath}/member/memberEnroll.do';">회원가입</button>			    
+			    </c:if>
 			 </div>
 		</nav>
 	</header>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.spring.member.model.dao.MemberDao">
+<!-- #8.2. @Mapper 인터페이스 지정 -->
+
+	<insert id="insertMember">
+		insert into 
+			member 
+		values (
+			#{memberId},
+			#{password},
+			#{name},
+			#{gender},
+			#{birthday},
+			#{email},
+			#{phone},
+			#{address},
+			#{hobby},
+			default,
+			null,
+			default
+		)
+	</insert>
+	
+	<select id="selectOneMember" resultType="member">
+		select
+			*
+		from
+			member
+		where
+			member_id = #{memberId}	
+	</select>
+	
+	<update id="updateMember">
+		update
+			member
+		set
+			name = #{name},
+			gender = #{gender},
+			birthday = #{birthday},
+			email = #{email},
+			phone = #{phone},
+			address = #{address},
+			hobby = #{hobby},
+			updated_at = sysdate
+		where
+			member_id = #{memberId}
+	</update>
+	
+</mapper>

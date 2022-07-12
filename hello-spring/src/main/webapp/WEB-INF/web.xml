@@ -10,7 +10,13 @@
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<!-- #9.1. root-context에 security-context.xml 설정파일 추가 -->
+		<param-value>
+			/WEB-INF/spring/root-context.xml
+			/WEB-INF/spring/security-context.xml
+		</param-value>
+		<!-- 위 param-value는 아래처럼 한줄로 할수도 있음 -->
+		<!-- <param-value>/WEB-INF/spring/*-context.xml</param-value> -->
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
